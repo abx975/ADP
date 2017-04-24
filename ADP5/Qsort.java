@@ -1,5 +1,6 @@
 
 public class Qsort {
+	static long counter = 0;
 
 	/**
 	 * Diese Methode tauscht das Element an der Position left und right
@@ -15,7 +16,7 @@ public class Qsort {
 	}
 
 	/**
-	 * Diese Methode berechnet Median Wert
+	 * Diese Methode berechnet den Median Wert
 	 *
 	 * @param array
 	 * @param left
@@ -25,14 +26,12 @@ public class Qsort {
 
 	private static Element<?> median(Element<?>[] array, int left, int right) {
 		int middle = left + (right - left) / 2;
-		// order the first and the middle
+
 		if (array[left].getKey() > array[middle].getKey() ^ array[left].getKey() > array[right].getKey()) {
 			return array[left];
 		}
-		// oder the first and the last
 		if (array[right].getKey() > array[middle].getKey() ^ array[right].getKey() > array[left].getKey()) {
 			return array[right];
-			// oder the last with the middle
 		}
 		return array[middle];
 	}
@@ -74,11 +73,10 @@ public class Qsort {
 		return pivot;
 	}
 
-
 	/**
-	 * Diese Methode sortiert alle Elementen von Position leftPosition bis rightP in
-	 * dem Array Pivotelement kann das erste, letzte
-	 * Element sein, sowie der Median oder ein zufalliges Element
+	 * Diese Methode sortiert alle Elementen von Position leftPosition bis
+	 * rightP in dem Array Pivotelement kann das erste, letzte Element sein,
+	 * sowie der Median oder ein zufalliges Element
 	 * 
 	 * @param array
 	 * @param leftPosition
@@ -86,6 +84,7 @@ public class Qsort {
 	 * @param pivotPosition
 	 */
 	public void quickS(Element<?>[] array, int leftPosition, int rightPosition, PivotPosition pivotPosition) {
+		counter++;
 		int left = leftPosition;
 		int right = rightPosition;
 		Element<?> pivot = pivotAuswahl(array, left, right, pivotPosition);
@@ -120,6 +119,7 @@ public class Qsort {
 	 *             wenn das Array 0 oder 1 Element enthält
 	 */
 	public void quickSort(Element<?>[] array, PivotPosition pivotPosition) throws IndexOutOfBoundsException {
+		counter++;
 		if (array.length <= 1) {
 			throw new IndexOutOfBoundsException("Array ist nicht zu sortiern. Array hat null oder 1 Element");
 		}
@@ -130,33 +130,173 @@ public class Qsort {
 
 	@SuppressWarnings("rawtypes")
 	public static void main(String a[]) {
-		Element[] input1 = { new Element<String>(1), new Element<String>(8), new Element<String>(3),
-				new Element<String>(5), new Element<String>(-8), new Element<Integer>(7), new Element<Integer>(8), };
+		int size = 0;
+		int maxExp = 5;
+		int numberOfRuns = 15;
+		System.out.println("RandomKeyValue");
+		System.out.println("PivotPosition= END");
+		for (int exp = 1; exp <= maxExp; exp++) {
+			size = (int) Math.pow(10, exp);
+			counter = 0;
 
-		Element[] input2 = input1.clone();
-		Element[] input3 = input1.clone();
-		Qsort test = new Qsort();
+			for (int i = 0; i < numberOfRuns; i++) {
 
+				Element[] input = new Element[size];
+				for (int j = 0; j < size; j++) {
+					input[j] = new Element<String>((int) (Math.random() * j));
+				}
+				Qsort Aufwandsanalyse = new Qsort();
+				Aufwandsanalyse.quickSort(input, PivotPosition.END);
+			}
+			System.out.println("n^" + exp + "=\t" + counter / numberOfRuns);
+
+		}
+
+		System.out.println("\nPivotPosition= RANDOM");
+		for (int exp = 1; exp <= maxExp; exp++) {
+			size = (int) Math.pow(10, exp);
+			counter = 0;
+
+			for (int i = 0; i < numberOfRuns; i++) {
+				Element[] input = new Element[size];
+				for (int j = 0; j < size; j++) {
+					input[j] = new Element<String>((int) (Math.random() * j));
+				}
+				Qsort Aufwandsanalyse = new Qsort();
+				Aufwandsanalyse.quickSort(input, PivotPosition.RANDOM);
+			}
+			System.out.println("n^" + exp + "=\t" + counter / numberOfRuns);
+
+		}
+
+		System.out.println("\nPivotPosition= MEDIAN");
+		for (int exp = 1; exp <= maxExp; exp++) {
+			size = (int) Math.pow(10, exp);
+			counter = 0;
+			for (int i = 0; i < numberOfRuns; i++) {
+				Element[] input = new Element[size];
+				for (int j = 0; j < size; j++) {
+					input[j] = new Element<String>((int) Math.random() * j);
+				}
+				Qsort Aufwandsanalyse = new Qsort();
+				Aufwandsanalyse.quickSort(input, PivotPosition.MEDIAN);
+			}
+			System.out.println("n^" + exp + "=\t" + counter / numberOfRuns);
+
+		}
+
+		////////////////////////////////////////////////////////////////////////////////////////
+		System.out.println("\nAscendingKeyValue");
+		System.out.println("PivotPosition= END");
+		for (int exp = 1; exp <= maxExp; exp++) {
+			size = (int) Math.pow(10, exp);
+			counter = 0;
+
+			Element[] input = new Element[size];
+			for (int j = 0; j < size; j++) {
+				input[j] = new Element<String>(j);
+			}
+			Qsort Aufwandsanalyse = new Qsort();
+			Aufwandsanalyse.quickSort(input, PivotPosition.END);
+
+			System.out.println("n^" + exp + "=\t" + counter );
+		}
+
+		System.out.println("\nPivotPosition= RANDOM");
+		for (int exp = 1; exp <= maxExp; exp++) {
+			size = (int) Math.pow(10, exp);
+			counter = 0;
+
+			for (int i = 0; i < numberOfRuns; i++) {
+				Element[] input = new Element[size];
+				for (int j = 0; j < size; j++) {
+					input[j] = new Element<String>(j);
+				}
+				Qsort Aufwandsanalyse = new Qsort();
+				Aufwandsanalyse.quickSort(input, PivotPosition.RANDOM);
+			}
+			System.out.println("n^" + exp + "=\t" + counter / numberOfRuns);
+
+		}
+
+		System.out.println("\nPivotPosition= MEDIAN");
+		for (int exp = 1; exp <= maxExp; exp++) {
+			size = (int) Math.pow(10, exp);
+			counter = 0;
+
+			Element[] input = new Element[size];
+			for (int j = 0; j < size; j++) {
+				input[j] = new Element<String>(j);
+			}
+			Qsort Aufwandsanalyse = new Qsort();
+			Aufwandsanalyse.quickSort(input, PivotPosition.MEDIAN);
+
+			System.out.println("n^" + exp + "=\t" + counter );
+
+		}
+		////////////////////////////////////////////////////////////////////////////////////////
+		System.out.println("\nDescendingKeyValue");
+		System.out.println("PivotPosition= END");
+		for (int exp = 1; exp <= maxExp; exp++) {
+			size = (int) Math.pow(10, exp);
+			counter = 0;
+
+			Element[] input = new Element[size];
+			for (int j = 0; j < size; j++) {
+				input[j] = new Element<String>(input.length - j);
+			}
+			Qsort Aufwandsanalyse = new Qsort();
+			Aufwandsanalyse.quickSort(input, PivotPosition.END);
+
+			System.out.println("n^" + exp + "=\t" + counter );
+
+		}
+
+		System.out.println("\nPivotPosition= RANDOM");
+		for (int exp = 1; exp <= maxExp; exp++) {
+			size = (int) Math.pow(10, exp);
+			counter = 0;
+
+			for (int i = 0; i < numberOfRuns; i++) {
+				Element[] input = new Element[size];
+				for (int j = 0; j < size; j++) {
+					input[j] = new Element<String>(input.length - j);
+				}
+				Qsort Aufwandsanalyse = new Qsort();
+				Aufwandsanalyse.quickSort(input, PivotPosition.RANDOM);
+			}
+			System.out.println("n^" + exp + "=\t" + counter / numberOfRuns);
+
+		}
+
+		System.out.println("\nPivotPosition= MEDIAN");
+		for (int exp = 1; exp <= maxExp; exp++) {
+			size = (int) Math.pow(10, exp);
+			counter = 0;
+
+			Element[] input = new Element[size];
+			for (int j = 0; j < size; j++) {
+				input[j] = new Element<String>(input.length - j);
+			}
+			Qsort Aufwandsanalyse = new Qsort();
+			Aufwandsanalyse.quickSort(input, PivotPosition.MEDIAN);
+
+			System.out.println("n^" + exp + "=\t" + counter );
+
+		}
+
+		////////////////////////////////////////////////////////////////////////////////////////
 		/**
 		 * qsortMedian
 		 */
-		for (Element elem : input1) {
-			System.out.print(elem.getKey() + " ");
-		}
-		System.out.println();
-		test.quickSort(input1, PivotPosition.MEDIAN);
-		for (Element elem : input1) {
-			System.out.print(elem.getKey() + " ");
-		}
-
-		/**
-		 * qsortEnd
-		 */
-		test.quickSort(input2, PivotPosition.END);
-
-		/**
-		 * qsortRandom
-		 */
-		test.quickSort(input3, PivotPosition.RANDOM);
+		// for (Element elem : input1) {
+		// System.out.print(elem.getKey() + " ");
+		// }
+		// System.out.println();
+		// for (int i = 0; i < 50; i++) {
+		// test.quickSort(input100, PivotPosition.BEGIN);
+		// for (Element elem : input1) {
+		// System.out.print(elem.getKey() + " ");
+		// }
 	}
 }
