@@ -84,7 +84,7 @@ public class Qsort {
 	 * @param pivotPosition
 	 */
 	public void quickS(Element<?>[] array, int leftPosition, int rightPosition, PivotPosition pivotPosition) {
-		counter++;
+		//counter++;
 		int left = leftPosition;
 		int right = rightPosition;
 		Element<?> pivot = pivotAuswahl(array, left, right, pivotPosition);
@@ -119,7 +119,7 @@ public class Qsort {
 	 *             wenn das Array 0 oder 1 Element enthält
 	 */
 	public void quickSort(Element<?>[] array, PivotPosition pivotPosition) throws IndexOutOfBoundsException {
-		counter++;
+		//counter++;
 		if (array.length <= 1) {
 			throw new IndexOutOfBoundsException("Array ist nicht zu sortiern. Array hat null oder 1 Element");
 		}
@@ -133,6 +133,10 @@ public class Qsort {
 		int size = 0;
 		int maxExp = 5;
 		int numberOfRuns = 15;
+		long timeEnd = 0;
+		long timeStart = 0;
+		Qsort Aufwandsanalyse = new Qsort();
+		
 		System.out.println("RandomKeyValue");
 		System.out.println("PivotPosition= END");
 		for (int exp = 1; exp <= maxExp; exp++) {
@@ -145,13 +149,16 @@ public class Qsort {
 				for (int j = 0; j < size; j++) {
 					input[j] = new Element<String>((int) (Math.random() * j));
 				}
-				Qsort Aufwandsanalyse = new Qsort();
+				timeStart = System.nanoTime();
 				Aufwandsanalyse.quickSort(input, PivotPosition.END);
+				timeEnd = System.nanoTime();
 			}
-			System.out.println("n^" + exp + "=\t" + counter / numberOfRuns);
+//			System.out.println("n^" + exp + "=\t" + counter / numberOfRuns);
+			System.out.println("n^" + exp + "\t" + (timeEnd - timeStart)/numberOfRuns + "\t");
 
 		}
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////////////////////////////////////////
 		System.out.println("\nPivotPosition= RANDOM");
 		for (int exp = 1; exp <= maxExp; exp++) {
 			size = (int) Math.pow(10, exp);
@@ -162,11 +169,12 @@ public class Qsort {
 				for (int j = 0; j < size; j++) {
 					input[j] = new Element<String>((int) (Math.random() * j));
 				}
-				Qsort Aufwandsanalyse = new Qsort();
+				timeStart = System.nanoTime();
 				Aufwandsanalyse.quickSort(input, PivotPosition.RANDOM);
+				timeEnd = System.nanoTime();
 			}
-			System.out.println("n^" + exp + "=\t" + counter / numberOfRuns);
-
+//			System.out.println("n^" + exp + "=\t" + counter / numberOfRuns);
+			System.out.println("n^" + exp + "\t" + (timeEnd - timeStart)/numberOfRuns + "\t");
 		}
 
 		System.out.println("\nPivotPosition= MEDIAN");
@@ -178,10 +186,12 @@ public class Qsort {
 				for (int j = 0; j < size; j++) {
 					input[j] = new Element<String>((int) Math.random() * j);
 				}
-				Qsort Aufwandsanalyse = new Qsort();
+				timeStart = System.nanoTime();
 				Aufwandsanalyse.quickSort(input, PivotPosition.MEDIAN);
+				timeEnd = System.nanoTime();
 			}
-			System.out.println("n^" + exp + "=\t" + counter / numberOfRuns);
+//			System.out.println("n^" + exp + "=\t" + counter / numberOfRuns);
+			System.out.println("n^" + exp + "\t" + (timeEnd - timeStart)/numberOfRuns + "\t");
 
 		}
 
@@ -196,10 +206,12 @@ public class Qsort {
 			for (int j = 0; j < size; j++) {
 				input[j] = new Element<String>(j);
 			}
-			Qsort Aufwandsanalyse = new Qsort();
+			timeStart = System.nanoTime();
 			Aufwandsanalyse.quickSort(input, PivotPosition.END);
+			timeEnd = System.nanoTime();
 
-			System.out.println("n^" + exp + "=\t" + counter );
+//			System.out.println("n^" + exp + "=\t" + counter );
+			System.out.println("n^" + exp + "\t" + (timeEnd - timeStart) + "\t");
 		}
 
 		System.out.println("\nPivotPosition= RANDOM");
@@ -212,10 +224,12 @@ public class Qsort {
 				for (int j = 0; j < size; j++) {
 					input[j] = new Element<String>(j);
 				}
-				Qsort Aufwandsanalyse = new Qsort();
+				timeStart = System.nanoTime();
 				Aufwandsanalyse.quickSort(input, PivotPosition.RANDOM);
+				timeEnd = System.nanoTime();
 			}
-			System.out.println("n^" + exp + "=\t" + counter / numberOfRuns);
+//			System.out.println("n^" + exp + "=\t" + counter / numberOfRuns);
+			System.out.println("n^" + exp + "\t" + (timeEnd - timeStart)/numberOfRuns + "\t");
 
 		}
 
@@ -228,10 +242,12 @@ public class Qsort {
 			for (int j = 0; j < size; j++) {
 				input[j] = new Element<String>(j);
 			}
-			Qsort Aufwandsanalyse = new Qsort();
+			timeStart = System.nanoTime();
 			Aufwandsanalyse.quickSort(input, PivotPosition.MEDIAN);
+			timeEnd = System.nanoTime();
 
-			System.out.println("n^" + exp + "=\t" + counter );
+//			System.out.println("n^" + exp + "=\t" + counter );
+			System.out.println("n^" + exp + "\t" + (timeEnd - timeStart) + "\t");
 
 		}
 		////////////////////////////////////////////////////////////////////////////////////////
@@ -245,10 +261,12 @@ public class Qsort {
 			for (int j = 0; j < size; j++) {
 				input[j] = new Element<String>(input.length - j);
 			}
-			Qsort Aufwandsanalyse = new Qsort();
+			timeStart = System.nanoTime();
 			Aufwandsanalyse.quickSort(input, PivotPosition.END);
+			timeEnd = System.nanoTime();
 
-			System.out.println("n^" + exp + "=\t" + counter );
+//			System.out.println("n^" + exp + "=\t" + counter );
+			System.out.println("n^" + exp + "\t" + (timeEnd - timeStart) + "\t");
 
 		}
 
@@ -262,10 +280,12 @@ public class Qsort {
 				for (int j = 0; j < size; j++) {
 					input[j] = new Element<String>(input.length - j);
 				}
-				Qsort Aufwandsanalyse = new Qsort();
+				timeStart = System.nanoTime();
 				Aufwandsanalyse.quickSort(input, PivotPosition.RANDOM);
+				timeEnd = System.nanoTime();
 			}
-			System.out.println("n^" + exp + "=\t" + counter / numberOfRuns);
+//			System.out.println("n^" + exp + "=\t" + counter / numberOfRuns);
+			System.out.println("n^" + exp + "\t" + (timeEnd - timeStart)/numberOfRuns + "\t");
 
 		}
 
@@ -278,10 +298,12 @@ public class Qsort {
 			for (int j = 0; j < size; j++) {
 				input[j] = new Element<String>(input.length - j);
 			}
-			Qsort Aufwandsanalyse = new Qsort();
+			timeStart = System.nanoTime();
 			Aufwandsanalyse.quickSort(input, PivotPosition.MEDIAN);
+			timeEnd = System.nanoTime();
 
-			System.out.println("n^" + exp + "=\t" + counter );
+//			System.out.println("n^" + exp + "=\t" + counter );
+			System.out.println("n^" + exp + "\t" + (timeEnd - timeStart) + "\t");
 
 		}
 
